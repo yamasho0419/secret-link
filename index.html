@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      このページが読み込めるのは、同じサイトにあるスクリプトとスタイルだけ。
+      connect-src を許可していないので、ページから外部へデータを送信できない。
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>ひみつリンク</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>ひみつリンク</h1>
+        <p>パスワードを知っている人だけが読めるメモを、リンクで渡せます。</p>
+      </header>
+
+      <p id="unsupported" class="error" hidden>
+        このブラウザでは暗号機能を使えません。https:// で始まるアドレスで開いてください。
+      </p>
+
+      <!-- メモを作る画面 -->
+      <section id="create-view" hidden>
+        <form id="create-form">
+          <label for="memo">メモ</label>
+          <textarea id="memo" rows="5" maxlength="2000" required placeholder="例：Wi-Fi のパスワードは…"></textarea>
+
+          <label for="create-password">パスワード（8文字以上）</label>
+          <div class="row">
+            <input id="create-password" type="text" minlength="8" required autocomplete="off" spellcheck="false" />
+            <button type="button" id="generate" class="secondary">自動で作る</button>
+          </div>
+
+          <button type="submit" id="create-submit">暗号化してリンクを作る</button>
+        </form>
+
+        <div id="created" hidden>
+          <h2>リンクができました</h2>
+          <label for="link">このリンクを、読んでほしい相手に送ります</label>
+          <div class="row">
+            <input id="link" type="text" readonly />
+            <button type="button" id="copy-link" class="secondary">コピー</button>
+          </div>
+          <canvas id="qr" hidden aria-label="リンクの QR コード"></canvas>
+          <p id="qr-note" class="hint" hidden>メモが長いため、QR コードは表示していません。</p>
+          <p class="notice">
+            パスワードは、リンクとは別の方法で伝えてください（リンクはメール、パスワードは電話など）。
+            同じ場所に書くと、リンクを見た人がそのまま読めてしまいます。
+          </p>
+        </div>
+      </section>
+
+      <!-- メモを開く画面 -->
+      <section id="open-view" hidden>
+        <form id="open-form">
+          <h2>暗号化されたメモが届いています</h2>
+          <label for="open-password">パスワード</label>
+          <div class="row">
+            <input id="open-password" type="password" required autocomplete="off" />
+            <button type="submit" id="open-submit">開く</button>
+          </div>
+          <p id="open-error" class="error" role="alert" hidden></p>
+        </form>
+
+        <div id="opened" hidden>
+          <h2>メモ</h2>
+          <pre id="opened-memo"></pre>
+          <button type="button" id="copy-memo" class="secondary">コピー</button>
+        </div>
+
+        <p><a href="./">自分でメモを作る</a></p>
+      </section>
+
+      <details>
+        <summary>どういう仕組み？</summary>
+        <ol>
+          <li>メモは、このブラウザの中でパスワードを使って暗号化されます。</li>
+          <li>暗号化されたメモは、リンクの「#」より後ろに入ります。ブラウザは「#」より後ろをサーバーに送りません。</li>
+          <li>リンクを開いた人がパスワードを入力すると、その人のブラウザの中で元のメモに戻ります。</li>
+          <li>メモもパスワードも、どのサーバーにも送信・保存されません。</li>
+        </ol>
+        <p class="hint">
+          パスワードが違う場合と、リンクが途中で書き換えられた場合は、どちらも開けません。
+        </p>
+      </details>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
