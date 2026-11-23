@@ -1,9 +1,9 @@
-# ひみつリンク
+# パスワード付きメモ共有
 
 パスワードを知っている人だけが読めるメモを、リンクで渡せる Web サイトです。
 メモはブラウザの中で暗号化され、**メモもパスワードも、どのサーバーにも送信・保存されません**。
 
-- デモ：https://yamasho0419.github.io/secret-link/
+- サイト：https://yamasho0419.github.io/secret-link/
 - 使用技術：TypeScript、Web Crypto API、Vite、Vitest、GitHub Pages
 
 ## 使い方

@@ -12,13 +12,13 @@
       content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
     />
     <meta name="referrer" content="no-referrer" />
-    <title>ひみつリンク</title>
+    <title>パスワード付きメモ共有</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
     <main>
       <header>
-        <h1>ひみつリンク</h1>
+        <h1>パスワード付きメモ共有</h1>
         <p>パスワードを知っている人だけが読めるメモを、リンクで渡せます。</p>
       </header>
 
@@ -78,18 +78,6 @@
         <p><a href="./">自分でメモを作る</a></p>
       </section>
 
-      <details>
-        <summary>どういう仕組み？</summary>
-        <ol>
-          <li>メモは、このブラウザの中でパスワードを使って暗号化されます。</li>
-          <li>暗号化されたメモは、リンクの「#」より後ろに入ります。ブラウザは「#」より後ろをサーバーに送りません。</li>
-          <li>リンクを開いた人がパスワードを入力すると、その人のブラウザの中で元のメモに戻ります。</li>
-          <li>メモもパスワードも、どのサーバーにも送信・保存されません。</li>
-        </ol>
-        <p class="hint">
-          パスワードが違う場合と、リンクが途中で書き換えられた場合は、どちらも開けません。
-        </p>
-      </details>
     </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
